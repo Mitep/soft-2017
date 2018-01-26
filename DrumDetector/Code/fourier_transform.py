@@ -12,7 +12,7 @@ def stft(data, fft_size=1024, overlap_fac=0.5, sample_rate=44100):
     hop_size = np.int32(np.floor(fft_size * (1-overlap_fac)))
     pad_end_size = fft_size          # the last segment can overlap the end of the data array by no more than one window size
     total_segments = np.int32(np.ceil(len(data) / np.float32(hop_size)))
-    t_max = len(data) / np.float32(sample_rate)
+    #t_max = len(data) / np.float32(sample_rate)
      
     window = np.hanning(fft_size)  # our half cosine window
     inner_pad = np.zeros(fft_size) # the zeros which will be used to double each segment size
@@ -32,4 +32,6 @@ def stft(data, fft_size=1024, overlap_fac=0.5, sample_rate=44100):
     result = 20*np.log10(result)         # scale to db
     result = np.clip(result, -40, 200)    # clip values
     
-    return result
+    time_interval_of_col = (float(fft_size)/sample_rate)*(1 - overlap_fac)
+    
+    return time_interval_of_col, result
