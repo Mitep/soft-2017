@@ -20,7 +20,7 @@ def stft(data, fft_size=1024, overlap_fac=0.5, sample_rate=44100):
     inner_pad = np.zeros(fft_size) # the zeros which will be used to double each segment size
     proc = np.concatenate((data, np.zeros(pad_end_size)))              # the data to process
     result = np.empty((fft_size, total_segments), dtype=np.float32)    # space to hold the result
-    for i in xrange(total_segments):                      # for each segment
+    for i in range(total_segments):                      # for each segment
         current_hop = hop_size * i                        # figure out the current segment offset
         segment = proc[current_hop:current_hop+fft_size]  # get the current segment
         windowed = segment * window                       # multiply by the half cosine function

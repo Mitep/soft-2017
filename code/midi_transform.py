@@ -23,8 +23,6 @@ def midi_transform(midi_file, midi_matrix_col_num, time_interval, midi_notes, dr
         num_of_ticks += msg.time
         if msg.type == 'note_on':
             if msg.note in midi_notes:
-                ret_mat[midi_notes[msg.note], int(num_of_ticks/ticks_per_col):] = msg.velocity  #mozda moze i velocity umesto 1
-        if msg.type == 'note_off':
-            if msg.note in midi_notes:
-                ret_mat[midi_notes[msg.note], int(num_of_ticks/ticks_per_col):] = 0
+                col = int(round(num_of_ticks/ticks_per_col, 0))
+                ret_mat[midi_notes[msg.note], col:col+2] = 255
     return ret_mat

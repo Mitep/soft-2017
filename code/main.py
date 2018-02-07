@@ -2,22 +2,24 @@
 glavni modul aplikacije
 '''
 
-#from keras.models import load_model
+from keras.models import load_model
 import dataset_processing as dp
-#import rnn
+import rnn
 
-WAV_IN_PATH = '..\..\dataset\in'
-MIDI_IN_PATH = '..\..\dataset\out'
-WAV_OUT_PATH = '..\dataset\in'
-MIDI_OUT_PATH = '..\dataset\out'
+WAV_IN_PATH = 'dataset_raw\input'
+MIDI_IN_PATH = 'dataset_raw\output'
+WAV_OUT_PATH = 'dataset\input'
+MIDI_OUT_PATH = 'dataset\output'
 
 #transformacija wav i midi fajlova u matrice
-dp.wav_to_image(WAV_IN_PATH, WAV_OUT_PATH)
-dp.midi_to_image(MIDI_IN_PATH, MIDI_OUT_PATH)
+#dp.wav_to_image(WAV_IN_PATH, WAV_OUT_PATH)
+#dp.midi_to_image(MIDI_IN_PATH, MIDI_OUT_PATH)
 
-#model = rnn.build_model()
-#data = dp.format_dataset(WAV_OUT_PATH, MIDI_OUT_PATH)
-#model, train_start_time, train_end_time = rnn.train_rnn(model, data, 2)
+#formatiranje dataseta i kreidanje modela)
+#model = rnn.build_model(1024, 3)
+#trained_model = rnn.train_rnn(model, WAV_OUT_PATH, MIDI_OUT_PATH)
 
-#model.save('rnn_model.h5')
-#model = load_model('rnn_model.h5')
+#trained_model.save('rnn_model.h5')
+model = load_model('rnn_model.h5')
+trained_model = rnn.train_rnn(model, WAV_OUT_PATH, MIDI_OUT_PATH)
+trained_model.save('rnn_model2.h5')
