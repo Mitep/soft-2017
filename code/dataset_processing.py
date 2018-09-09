@@ -7,7 +7,6 @@ import os
 from scipy.io.wavfile import read
 from PIL import Image
 from mido import MidiFile
-import matplotlib.pyplot as plt
 import fourier_transform as ft
 from midi_transform import midi_transform as mt
 
@@ -19,7 +18,7 @@ def wav_to_image(input_dir, output_dir):
     Konvertovanje wav fajla u sliku.
     '''
     mat = np.zeros((1024,1))
-    for filename in os.listdir(input_dir):
+    for filename in sorted(os.listdir(input_dir)):
         path = os.path.join(input_dir, filename)
         sample_rate, data = read(path)
         time_interval_of_col, result = ft.stft(data)
@@ -68,7 +67,7 @@ def midi_to_image(input_dir, output_dir):
     drum_col = {'kick':0, 'snare':1, 'hihat':2}
     midi_notes = {36:drum_col['kick'], 38:drum_col['snare'], 48:drum_col['hihat'], 49:drum_col['hihat'], 50:drum_col['hihat'], 51:drum_col['hihat'], 52:drum_col['hihat'], 53:drum_col['hihat'], 54:drum_col['hihat'], 55:drum_col['hihat'], 56:drum_col['hihat'], 57:drum_col['hihat'], 58:drum_col['hihat'], 59:drum_col['hihat']}
     mat = np.zeros((3,1))
-    for filename in os.listdir(input_dir):
+    for filename in sorted(os.listdir(input_dir)):
         path = os.path.join(input_dir, filename)
         mid = MidiFile(path)
         midi_result = mt(mid, wav_col_len[filename[-6:-4]], time_interval, midi_notes, drum_col)

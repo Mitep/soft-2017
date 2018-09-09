@@ -10,7 +10,7 @@ def midi_transform(midi_file, midi_matrix_col_num, time_interval, midi_notes, dr
     '''
     midi_matric_col_num mora se poklapati sa brojem kolona spektrograma
     time_interval predstavlja vremenski interval jedne kolone spektrograma.
-    koristimo ga da bismo sihronizovali udarce bubnjeva u spektrogramu sa udardima u midi matrici
+    koristimo ga da bismo sihronizovali udarce bubnjeva u spektrogramu sa udarcima u midi matrici
     '''
     ret_mat = np.zeros((len(drum_col), midi_matrix_col_num))
     for msg in merge_tracks(midi_file.tracks):

@@ -12,17 +12,15 @@ import os
 
 def build_model(input_length=1024, output_length=3):
     model = Sequential()
-    
     #input layer
-    model.add(LSTM(20, input_shape=(None, 1024), return_sequences=True))
+    model.add(LSTM(2, input_shape=(None, 1024), return_sequences=True))
     model.add(Dropout(0.2))
     #hidden layer/layers
-    model.add(LSTM(40, return_sequences=True))
+    model.add(LSTM(2, return_sequences=True))
     model.add(Dropout(0.2))
     #output layer
     model.add(Dense(output_length))
     model.add(Activation('linear'))
-
     model.compile(loss='mse', optimizer='rmsprop')
     return model
 
@@ -35,7 +33,15 @@ def train_rnn(model, wav_path, midi_path):
     Y_data = np.rot90(Y_data, 3)
     X_data = X_data.reshape(1, 70320, 1024)
     Y_data = Y_data.reshape(1, 70320, 3)
-    model.fit(X_data, Y_data, batch_size=40, nb_epoch=5, verbose=1)
+    model.fit(X_data, Y_data, batch_size=32, nb_epoch=5, verbose=1)
     finish_time = time.time()
     print('Train finished on ' + str(finish_time))
     return model
+
+def run_rnn(model, wav_path):
+    X_data = misc.imread(os.path.join(wav_path, 'input.png'))
+    X_data = np.rot90(X_data, 3)
+    X_data = X_data.reshape(1, 70320, 1024)
+    result = model.predict(X_data, batch_size=32, verbose=1)
+    result = result.reshape(-1,result.shape[1])
+    return result
