@@ -17,7 +17,7 @@ def wav_to_image(input_dir, output_dir):
     '''
     Konvertovanje wav fajla u sliku.
     '''
-    mat = np.zeros((1024,1))
+    mat = np.zeros((128,1))
     for filename in sorted(os.listdir(input_dir)):
         path = os.path.join(input_dir, filename)
         sample_rate, data = read(path)
@@ -46,6 +46,7 @@ def wav_process_type(wav_img, type):
     '''
     if type == 'multiply_by_3':
         wav_img = wav_img*3
+        wav_img = wav_img[::8]
         return wav_img
     elif type == 'inverse':
         wav_img = 255-wav_img
